@@ -6,10 +6,14 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      # gpu config
       ./nvidia.nix
+      # git config
       ./git.nix
+      # bash aliases
       ./aliases.nix
     ];
 
@@ -17,7 +21,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  # networking config
+  networking.hostName = "nixos"; # Define your hostname. #REMEMBER TO CHANGE IN 'flake.nix'
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -45,24 +50,6 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  #services.xserver.enable = true;
-  # Enable the DWM Desktop Environment
-  #services.xserver.windowManager.dwm.enable = true; 
-  # Enable the XFCE Desktop Environment.
-  #services.xserver.displayManager.lightdm.enable = false;
-  #services.xserver.desktopManager.xfce.enable = false;
-  # Enable KDE Desktop Environment
-  #services.xserver.desktopManager.plasma6.enable = true;
-  #services.xserver.displayManager.sddm.enable = true;
-  #services.xserver.displayManager.sddm.wayland.enable = true;
-
-#  services.xserver = {
-#    enable = true;
-#    displayManager.gdm.enable = true;
-#    desktopManager.gnome.enable = true;
-#  };
-
   services = {
     desktopManager.plasma6.enable = true;
     displayManager.sddm.enable = true;
@@ -70,6 +57,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    # kde & other utils
     kdePackages.discover
     kdePackages.kcalc
     kdePackages.kcharselect
@@ -81,35 +69,36 @@
     kdiff3    
     kdePackages.isoimagewriter
     kdePackages.partitionmanager
+    # kdePackages.kzones
     hardinfo2
+    nvitop
+    wget
+
+    # wayloand
     wayland-utils
     wl-clipboard
     
+    # apps
     vim
     neovim
-    wget
-    nvitop
     vscode
     python314
-    #jdk24
     vesktop
-    atkinson-hyperlegible-next
     vlc
-    atkinson-hyperlegible-mono
     bolt-launcher
-    kdePackages.kzones
-    atkinson-hyperlegible
-    atkinson-monolegible
     hyfetch
+
+    # fonts
+    atkinson-hyperlegible
+    atkinson-hyperlegible-mono
+    atkinson-hyperlegible-next
   ];
 
+  # sets $EDITOR to nvim
   environment.variables.EDITOR = "nvim";
 
+  # enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  programs.steam = {
-    enable = true;
-  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -130,9 +119,6 @@
     #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tina = {
     isNormalUser = true;
@@ -145,6 +131,10 @@
 
   # Install firefox.
   programs.firefox.enable = true;
+
+  # steam
+  programs.steam.enable = true;
+
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -174,6 +164,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
+  system.stateVersion = "25.05"; # Did you read the comment? # (yes <3)
 
 }
