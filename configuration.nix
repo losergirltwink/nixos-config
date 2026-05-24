@@ -10,6 +10,7 @@
       ./hardware-configuration.nix
       ./nvidia.nix
       ./git.nix
+      ./aliases.nix
     ];
 
   # Bootloader.
