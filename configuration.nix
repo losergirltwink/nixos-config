@@ -15,6 +15,8 @@
       ./git.nix
       # bash aliases
       ./aliases.nix
+      # obs
+      ./obs.nix
     ];
 
   # Bootloader.
@@ -96,6 +98,12 @@
 
   # sets $EDITOR to nvim
   environment.variables.EDITOR = "nvim";
+
+  # fixes a quirk of launching osrs via bolt-launcher
+  # where it defaults to UTC time if this variable is not set
+  environment.sessionVariables = {
+    TZ = "America/New_York";
+  };
 
   # enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
